@@ -129,6 +129,21 @@ body {
 .link_item i.icon {
 	margin-right: 15px;
 }
+.add_item {
+	margin-left: 0;
+	padding-left: 15px;
+	padding-right: 15px;
+	width: 220px;
+	line-height: 50px;
+	white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  float: left;
+}
+.add_item i.icon {
+	margin-right: 15px;
+}
 .link_edit {
 	position: absolute;
 		left: 250px;
