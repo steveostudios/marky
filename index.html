@@ -1,352 +1,48 @@
 <html>
-<head>
-	<title>Marky</title>
-	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
-	<link rel="stylesheet" href="assets/lib/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
-</head>
-<body>
-	<div id="header">
-		<div class="header_list">
-			<i id="btn_add" class="icon pe-7s-plus"></i><i id="btn_about" class="icon pe-7s-info"></i><i id="btn_edit" class="icon pe-7s-more"></i>
+	<head>
+		<title>Marky</title>
+		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	</head>
+	<body>
+		<div id="pane_list" class="pane">
+			<ul id="list"></ul>
+			<div class="btn_item_create">Add</div>
 		</div>
-		<div class="header_edit">
-			<i class="btn_edit_confirm icon pe-7s-check"></i><i class="btn_edit_cancel icon pe-7s-close-circle"></i>
-		</div>
-	</div>
-	<div id="pane_about">
-		<img src="assets/img/icon.svg" alt="Marky">
-		<h1>Marky</h1>
-		<p>&copy;2015 steveostudios</p>
-	</div>
-	<div id="pane_list_and_edit">
-		<div id="pane_list">
-			<ul id="list_links"></ul>
-		</div>
-		<div id="pane_edit">
+		<div id="pane_edit" class="pane">
 			<form>
-				<input type="hidden" id="inp_id" name="inp_id"/>
-				<input type="hidden" id="inp_order" name="inp_order"/>
+				<div class="form_group">
+					<label for="inp_name">ID</label>
+					<input type="text" id="inp_id" name="inp_id"/>
+				</div>
+				<div class="form_group">
+					<label for="inp_name">Order</label>
+					<input type="text" id="inp_order" name="inp_order"/>
+				</div>
+				<div class="form_group">
+					<label for="inp_name">Type</label>
+					<input type="text" id="inp_type" name="inp_type"/>
+				</div>
 				<div class="form_group">
 					<label for="inp_name">Name</label>
 					<input type="text" id="inp_name" name="inp_name"/>
 				</div>
-
 				<div class="form_group">
-					<label for="inp_type">Type</label>
-					<select id="inp_type" name="inp_type">
-						<option>Select a type</option>
-						<option value="vnc">VNC</option>
-						<option value="http">Link</option>
-					</select>
+					<label for="inp_name">Icon</label>
+					<input type="text" id="inp_icon" name="inp_icon"/>
 				</div>
-
 				<div class="form_group">
-					<label for="inp_icon">Icon</label>
-					<input type="hidden" id="inp_icon" name="inp_icon"/>
-					<div class="selected_icon"></div> <div class="btn_item_change_icon">Change Icon</div>
-				</div>
-
-				<div class="form_group">
-					<label for="inp_url">URL</label>
+					<label for="inp_name">URL</label>
 					<input type="text" id="inp_url" name="inp_url"/>
 				</div>
-
-				<div class="form_group">
-					<div class="btn_item_delete">Delete</div>
-					<div class="item_delete_yousure">
-						<label>Are you sure?</label>
-						<div class="btn_item_delete_confirm">Yes</div><div class="btn_item_delete_cancel">No</div>
-					</div>
+				<div class="btn_item_remove">Delete</div>
+				<div class="btngroup_item_remove_areyousure">
+					<div class="btn_item_remove_cancel">No</div><div class="btn_item_remove_confirm">Yes</div>
 				</div>
+				<div class="btn_item_edit_cancel">Cancel</div><div class="btn_item_edit_confirm">Save</div>
 			</form>
 		</div>
-		<div id="pane_edit_icon">
-			<ul></ul>
-		</div>
-	</div>
-	<!-- <script type="text/javascript" src="assets/lib/jquery-2.1.3.min.js"></script> -->
-	<!-- <script type="text/javascript" src="assets/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script> -->
-  <script type="text/javascript">
-  	window.$ = window.jQuery = require('./assets/lib/jquery-2.1.3.min.js');
-  	require('./assets/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js');
-  	var ipc = require('ipc');
-		var icons = ['album','arc','back-2','bandaid','car','diamond','door-lock','eyedropper','female','gym','hammer','headphones','helm','hourglass','leaf','magic-wand','male','map-2','next-2','paint-bucket','pendrive','photo','piggy','plugin','refresh-2','rocket','settings','shield','smile','usb','vector','wine','cloud-upload','cash','close','bluetooth','cloud-download','way','close-circle','id','angle-up','wristwatch','angle-up-circle','world','angle-right','volume','angle-right-circle','users','angle-left','user-female','angle-left-circle','up-arrow','angle-down','switch','angle-down-circle','scissors','wallet','safe','volume2','volume1','voicemail','video','user','upload','unlock','umbrella','trash','tools','timer','ticket','target','sun','study','stopwatch','star','speaker','signal','shuffle','shopbag','share','server','search','film','science','disk','ribbon','repeat','refresh','add-user','refresh-cloud','paperclip','radio','note2','print','network','prev','mute','power','medal','portfolio','like2','plus','left-arrow','play','key','plane','joy','photo-gallery','pin','phone','plug','pen','right-arrow','paper-plane','delete-user','paint','bottom-arrow','notebook','note','next','news-paper','musiclist','music','mouse','more','moon','monitor','micro','menu','map','map-marker','mail','mail-open','mail-open-file','magnet','loop','look','lock','lintern','link','like','light','less','keypad','junk','info','home','help2','help1','graph3','graph2','graph1','graph','global','gleam','glasses','gift','folder','flag','filter','file','expand1','exapnd2','edit','drop','drawer','download','display2','display1','diskette','date','cup','culture','crop','credit','copy-file','config','compass','comment','coffee','cloud','clock','check','chat','cart','camera','call','calculator','browser','box2','box1','bookmarks','bicycle','bell','battery','ball','back','attention','anchor','albums','alarm','airplay'];
-  	var links = [];
-  	var mode = 'list';
-  	var animSpeed = 200;
-
-  	function getObjByProp(arr, prop, attr) {
-			for (var i = 0; i < arr.length; i++) {
-			  if (arr[i][prop] == attr){
-					return arr[i];
-			  }
-			}
-		}
-
-  	function sortByProp(prop) {
-		  'use strict';
-		  return function (a, b) {
-		    var sortStatus = 0;
-		    if (a[prop] < b[prop]) {
-		      sortStatus = -1;
-		    } else if (a[prop] > b[prop]) {
-		      sortStatus = 1;
-		    }
-		    return sortStatus;
-		  };
-		}
-
-  	function links_build() {
-			$('#list_links').html('');
-			if(links.length == 0) {
-				$('#list_links').append('<li><div class="add_item"><i class="icon pe-7s-up-arrow"></i> Add a new item first</div></li>');
-				$('#btn_add').css({'left': '0'});
-			} else {
-				links.sort(sortByProp('order'));
-				for (var key in links) {
-					$('#list_links').append('<li data-id="'+ key +'" data-url="'+ links[key].url +'"><div class="link_item"><i class="icon pe-7s-'+ links[key].icon +'"></i>'+ links[key].name +'</div><div class="link_edit"><i class="icon pe-7s-edit btn_edit_item"></i><i class="icon pe-7s-menu btn_handle_item"></i></div></li>');
-				}
-				$('#list_links').sortable({
-					handle: '.btn_handle_item',
-					axis: 'y'
-				});
-			}
-		}
-
-
-		/*
-		 * Add Link Pane
-		 *
-		 */
-		function pane_add() {
-			var new_key = 0;
-			var new_order = 0;
-			if (links.length != 0) {
-				for (var key in links) {
-					if(key > new_key) {
-						new_key = key;
-					}
-				}
-				new_key++;
-			}
-			$('#inp_id').val(new_key);
-			$('#inp_order').val(new_order);
-			$('#inp_name').val('');
-			$('#inp_type').val('');
-			$('#inp_icon').val('');
-			$('.selected_icon').html('');
-			$('#inp_url').val('');
-			
-			$('#pane_list_and_edit').animate({'left': '-250px'}, animSpeed);
-			$('#header').animate({'left': '-250px'}, animSpeed);
-			mode = 'add_item';
-		}
-		$('#header').on('click', '#btn_add', function(event) {
-			event.preventDefault();
-			pane_add();		
-		});
-
-		/*
-		 * Edit List Pane
-		 *
-		 */
-		function pane_edit() {
-			if(mode == 'edit') {
-				$('.link_item').animate({'width': '220px'}, animSpeed);
-				$('.link_edit').animate({'left': '250px'}, animSpeed);
-				$('#btn_add').animate({'left': '-35px'}, animSpeed);
-				var sorted_list = $('#list_links').sortable('toArray', {data: 'id'});
-				for (i = 0; i < sorted_list.length; ++i) {
-					var link_id = sorted_list[i];
-					// getObjByProp(links, 'id', link_id).order = i;
-				}
-				mode = 'list';
-			} else if(mode == 'list') {
-				$('.link_item').animate({'width': '165px'}, animSpeed);
-				$('.link_edit').animate({'left': '195px'}, animSpeed);
-				$('#btn_add').animate({'left': '0'}, animSpeed);
-				mode = 'edit';
-			}
-		}
-		$('#header').on('click', '#btn_edit', function(event) {
-			event.preventDefault();
-			pane_edit();
-		});
-
-		/*
-		 * Edit Link Pane
-		 *
-		 */
-		function pane_edit_link(item_id) {
-			$('#inp_id').val(item_id);
-			$('#inp_order').val(links[item_id].order);
-			$('#inp_name').val(links[item_id].name);
-			$('#inp_type').val(links[item_id].type);
-			$('#inp_icon').val(links[item_id].icon);
-			$('.selected_icon').html('<i class="icon pe-7s-'+ links[item_id].icon +'"></i>');
-			$('#inp_url').val(links[item_id].url);
-			$('#pane_list_and_edit').animate({'left': '-250px'}, animSpeed);
-			$('#header').animate({'left': '-250px'}, animSpeed);
-			$('#btn_add').animate({'left': '-35px'}, animSpeed);
-			mode = 'edit_item';
-		}
-		$('#list_links').on('click', '.btn_edit_item', function(event) {
-			event.preventDefault();
-			var item_id = $(this).parent().parent().data('id');
-			pane_edit_link(item_id);
-		});
-
-		// Edit Item Confirm
-		function edit_item_confirm() {
-			var edited_item = {};
-			edited_item.order = $('#inp_order').val();
-			edited_item.name = $('#inp_name').val();
-			edited_item.icon = $('#inp_icon').val();
-			edited_item.type = $('#inp_type').val();
-			edited_item.url = $('#inp_url').val();
-			links[$('#inp_id').val()] = edited_item;
-			links_save();
-			links_build();
-			$('.link_item').css({'width': '220px'});
-			$('.link_edit').css({'left': '250px'});
-			$('#pane_list_and_edit').animate({'left': '0'}, animSpeed);
-			$('#header').animate({'left': '0'}, animSpeed);
-			$('#btn_add').animate({'left': '-35px'}, animSpeed);
-			mode = 'list';
-		}
-		$('.header_edit').on('click', '.btn_edit_confirm', function(event) {
-			event.preventDefault();
-			edit_item_confirm();
-		});
-
-		// Edit Item Cancel
-		function edit_item_cancel() {
-			$('.link_item').css({'width': '220px'});
-			$('.link_edit').css({'left': '250px'});
-			$('#pane_list_and_edit').animate({'left': '0'}, animSpeed);
-			$('#header').animate({'left': '0'}, animSpeed);
-			mode = 'list';
-		}
-		$('.header_edit').on('click', '.btn_edit_cancel', function(event) {
-			event.preventDefault();
-			edit_item_cancel();
-		});
-
-		// Edit Item Iocn
-		function edit_item_icon(current_icon) {
-			$('#pane_edit_icon ul').html('');
-			for (var i = 0; i < icons.length; i++) {
-				var selected = '';
-				if (current_icon) {
-					if (icons[i] == current_icon) {
-						selected = ' selected';
-					}
-				}
-    		$('#pane_edit_icon ul').append('<li id="icon_'+ icons[i] +'" class="'+ selected +'"><i class="icon pe-7s-'+ icons[i] +'"></i></li>');
-			}
-			$('#pane_list_and_edit').animate({'left': '-500px'}, animSpeed);
-			$('#header').animate({'left': '-500px'}, animSpeed);
-			mode = 'edit_item_icon';
-		}
-		$('#pane_edit').on('click', '.btn_item_change_icon', function(event) {
-			event.preventDefault();
-			var current_icon = $('#inp_icon').val();
-			edit_item_icon(current_icon);
-		});
-
-		// Edit Item Icon Confirm
-		function edit_item_icon_confirm(new_icon) {
-			$('#inp_icon').val(new_icon);
-			$('.selected_icon').html('<i class="icon pe-7s-'+ new_icon +'"></i>');
-			$('#pane_list_and_edit').animate({'left': '-250px'}, animSpeed);
-			$('#header').animate({'left': '-250px'}, animSpeed);
-			mode = 'edit_item';
-		}
-		$('#pane_edit_icon ul').on('click', 'li', function(event) {
-			event.preventDefault();
-			var new_icon = $(this).attr('id').substring(5);
-			edit_item_icon_confirm(new_icon);
-		});
-
-		// Delete
-		$('#pane_edit').on('click', '.btn_item_delete', function(event) {
-			$('.item_delete_yousure').show();
-			$(this).hide();
-		});
-
-		$('#pane_edit').on('click', '.btn_item_delete_confirm', function(event) {
-			delete links[$('#inp_id').val()];
-			links_save();
-			links_build();
-			$('.link_item').css({'width': '200px'});
-			$('.link_edit').css({'left': '250px'});
-			$('#pane_list_and_edit').animate({'left': '0'}, animSpeed);
-			$('#header').animate({'left': '0'}, animSpeed);
-			mode = 'list';
-			$('.btn_item_delete').show();
-			$('.item_delete_yousure').hide();
-		});
-
-		$('#pane_edit').on('click', '.btn_item_delete_cancel', function(event) {
-			$('.btn_item_delete').show();
-			$('.item_delete_yousure').hide();
-		});
-
-		/*
-		 * About Pane
-		 *
-		 */
-		function pane_about() {
-			if (mode == 'list') {
-				left = 200;
-				$('#pane_list_and_edit').css('border-left', '1px solid #ededee');
-				mode = 'about';
-			} else if (mode == 'about') {
-				left = -0;
-				mode = 'list';
-				$('#pane_list_and_edit').css('border-left', 'none');
-			}
-	  	$('#pane_list_and_edit').animate({ "left": left +"px" }, animSpeed );
-		}
-		$('#header').on('click', '#btn_about', function(event) {
-			event.preventDefault();
-			pane_about();
-		});
-
-		/*
-		 * Click on link!
-		 *
-		 */
-		$('#list_links').on('click', 'li .link_item', function(event) {
-			event.preventDefault();
-		  link_goto($(this).parent().data('url'));
-		});
-		function link_goto(url) {
-			var arg_send = {
-				url: url
-			}
-			ipc.send('goto_link', arg_send);
-		}
-
-		// misc
-
-		function links_save() {
-			ipc.send('save_linkfile', links);
-		}
-
-		ipc.on('asynchronous-reply', function(arg) {
-		  console.log(arg); // prints "pong"
-		});
-
-		ipc.on('open_linkfile', function(arg_receive) {
-		  links = arg_receive;
-		  links_build();
-		});
-
-		$(function() {
-			ipc.send('open_linkfile');
-		});
-
-	</script>
-</body>
+		<script type="text/javascript" src="assets/lib/jquery-2.1.3.min.js"></script>
+		<script type="text/javascript" src="assets/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="assets/js/marky.js"></script>
+	</body>
 </html>

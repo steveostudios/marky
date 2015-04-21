@@ -5,6 +5,8 @@ var fs = require('fs');
 var ipc = require('ipc');
 var linkfile = app.getPath('appData') +'/'+ app.getName() +'/links.txt';
 
+var links = [];
+
 function linkfile_create(linkfile, callback) {
   var new_linkfile = [];
   var str = JSON.stringify(new_linkfile);
@@ -12,7 +14,7 @@ function linkfile_create(linkfile, callback) {
   fs.writeFile(linkfile, str, function (err) {
     if (err) throw err;
   });
-  app.regData = new_linkfile;
+  links = new_linkfile;
 }
 
 var mb = menubar()
@@ -22,15 +24,14 @@ mb.on('ready', function ready () {
     if (err) { // First Time
       linkfile_create(linkfile);
     } else {
-      app.regData = JSON.parse(data);
+      links = JSON.parse(data);
     }
   });
-  // event.sender.send('open_linkfile', app.regData); //remove
+  // event.sender.send('open_linkfile', links); //remove
   console.log('app is ready')
 })
 
 // In main process.
-
 ipc.on('goto_link', function(event, arg_recieve) {
   shell.openExternal('vnc://'+ arg_recieve.url);
   console.log('vnc://'+ arg_recieve.url);
@@ -38,16 +39,16 @@ ipc.on('goto_link', function(event, arg_recieve) {
 });
 
 ipc.on('open_linkfile', function(event, arg_recieve) {
-  console.log('que send');
-  event.sender.send('open_linkfile', app.regData);
+  console.log('file opened');
+  event.sender.send('opened_linkfile', links);
 });
 
 ipc.on('save_linkfile', function(event, arg_recieve) {
-	app.regData = arg_recieve;
-	fs.writeFile(linkfile, JSON.stringify(app.regData), function(err) {
+	links = arg_recieve;
+	fs.writeFile(linkfile, JSON.stringify(links), function(err) {
     if(!err) {
-    	console.log('saved');  
+    	console.log('file saved');  
   	}
   });
-  event.sender.send('asynchronous-reply', 'saved');
+  event.sender.send('saved_linkfile', links);
 });
