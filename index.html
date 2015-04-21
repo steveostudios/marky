@@ -1,45 +1,60 @@
 <html>
 	<head>
 		<title>Marky</title>
+		<link rel="stylesheet" href="assets/lib/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
 		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	</head>
 	<body>
 		<div id="pane_list" class="pane">
-			<ul id="list"></ul>
-			<div class="btn_item_create">Add</div>
+			<div class="header"><div class="btn_item_create"><i class="icon pe-7s-plus"></i></div><i class="icon pe-7s-info"></i><i class="icon pe-7s-more"></i></div>
+			<div class="content">
+				<ul id="list"></ul>
+			</div>
 		</div>
 		<div id="pane_edit" class="pane">
-			<form>
-				<div class="form_group">
-					<label for="inp_name">ID</label>
-					<input type="text" id="inp_id" name="inp_id"/>
-				</div>
-				<div class="form_group">
-					<label for="inp_name">Order</label>
-					<input type="text" id="inp_order" name="inp_order"/>
-				</div>
-				<div class="form_group">
-					<label for="inp_name">Type</label>
-					<input type="text" id="inp_type" name="inp_type"/>
-				</div>
-				<div class="form_group">
-					<label for="inp_name">Name</label>
-					<input type="text" id="inp_name" name="inp_name"/>
-				</div>
-				<div class="form_group">
-					<label for="inp_name">Icon</label>
-					<input type="text" id="inp_icon" name="inp_icon"/>
-				</div>
-				<div class="form_group">
-					<label for="inp_name">URL</label>
-					<input type="text" id="inp_url" name="inp_url"/>
-				</div>
-				<div class="btn_item_remove">Delete</div>
-				<div class="btngroup_item_remove_areyousure">
-					<div class="btn_item_remove_cancel">No</div><div class="btn_item_remove_confirm">Yes</div>
-				</div>
-				<div class="btn_item_edit_cancel">Cancel</div><div class="btn_item_edit_confirm">Save</div>
-			</form>
+			<div class="header"><div class="btn_item_edit_cancel"><i class="icon pe-7s-close-circle"></i></div><div class="btn_item_edit_confirm"><i class="icon pe-7s-check"></i></div></div>
+			<div class="content">
+				<form>
+					<div class="form_group">
+						<label for="inp_name">ID</label>
+						<input type="text" id="inp_id" name="inp_id"/>
+					</div>
+					<div class="form_group">
+						<label for="inp_name">Order</label>
+						<input type="text" id="inp_order" name="inp_order"/>
+					</div>
+					<div class="form_group">
+						<label for="inp_name">Type</label>
+						<input type="text" id="inp_type" name="inp_type"/>
+					</div>
+					<div class="form_group">
+						<label for="inp_name">Name</label>
+						<input type="text" id="inp_name" name="inp_name"/>
+					</div>
+					<div class="form_group">
+						<label for="inp_name">Icon</label>
+						<input type="text" id="inp_icon" name="inp_icon"/>
+					</div>
+					<div class="form_group">
+						<label for="inp_name">URL</label>
+						<input type="text" id="inp_url" name="inp_url"/>
+					</div>
+					<div class="btn btn_item_remove">Delete</div>
+					<div class="btngroup_item_remove_areyousure">
+						<div class="btn btn_item_remove_confirm">Yes</div><div class="btn btn_item_remove_cancel">No</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div id="pane_icons" class="pane">
+			<div class="header"></div>
+			<div class="content">
+				1
+				2
+				3
+				4
+				5
+			</div>
 		</div>
 		<script type="text/javascript" src="assets/lib/jquery-2.1.3.min.js"></script>
 		<script type="text/javascript" src="assets/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>

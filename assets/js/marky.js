@@ -8,7 +8,7 @@ var items = [
 function list_build() {
 	$('#list').html('');
 	$.each(items, function(index, item) {
-  	$('#list').append('<li data-id="'+ item.id +'"><div>'+ item.name +'</div><div class="item_edit"><div class="btn_item_edit">Edit</div><div class="btn_item_reorder">Reorder</div></div></li>');
+  	$('#list').append('<li data-id="'+ item.id +'"><div class="item_button">'+ item.name +'</div><div class="item_edit"><div class="btn btn_item_edit">E</div><div class="btn btn_item_reorder">R</div></div></li>');
 	});
 }
 
