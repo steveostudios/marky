@@ -8,7 +8,8 @@
     "url": "https://github.com/maxogden/menubar.git"
   },
   "scripts": {
-    "build": "atom-shell-packager . Example --ignore=node_modules/atom-shell --icon=Icon.icns",
+    "build": "atom-shell-packager . Marky",
+    "build2": "atom-shell-packager . Marky --ignore=node_modules/atom-shell --icon=Icon.icns",
     "start": "atom-shell ."
   },
   "keywords": [

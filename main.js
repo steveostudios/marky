@@ -1,4 +1,4 @@
-var menubar = require('menubar')
+var menubar = require('menubar');
 var shell = require('shell');
 var app = require('app');
 var fs = require('fs');

@@ -46,9 +46,12 @@ body {
 	white-space: normal;
 }
 .content {
+	position: relative;
 	height: 300px;
 	display: block;
+	background: #fff;
 	overflow-y: auto;
+	z-index: 10;
 }
 
 /*
@@ -76,6 +79,9 @@ body {
 #pane_about p {
 	margin: 6px 0 0 0;
 	font-size: 12px;
+}
+.steveostudios:hover {
+	color: #007aff;
 }
 
 /*
@@ -132,6 +138,19 @@ body {
 	padding: 17px 8px;
 	/*border: 1px solid red;*/
 	display: inline-block;
+}
+.item_addone {
+	width: 224px;
+	margin-left: 0;
+	padding-left: 15px;
+	padding-right: 15px;
+	line-height: 50px;
+	white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.item_addone i {
+	margin-right: 15px;
 }
 
 /*

@@ -31,15 +31,19 @@ var editMode = false;
 function list_build() {
 	items.sort(compare);
 	$('#list').html('');
-	$.each(items, function(index, item) {
-  	$('#list').append('<li data-id="'+ item.id +'"><div class="item_button"><i class="icon pe-7s-'+ item.icon +'"></i>'+ item.name +'</div><div class="item_edit"><div class="btn btn_item_edit"><i class="icon pe-7s-edit"></i></div><div class="btn btn_item_reorder"><i class="icon pe-7s-menu"></i></div></div></li>');
-	});
-	$('#list').sortable({
-		handle: '.btn_item_reorder',
-		axis: 'y'
-	});
-	if(editMode == true) {
-		$('.item_button').css({'width': '154px'});
+	if(items.length > 0) {
+		$.each(items, function(index, item) {
+	  	$('#list').append('<li data-id="'+ item.id +'"><div class="item_button"><i class="icon pe-7s-'+ item.icon +'"></i>'+ item.name +'</div><div class="item_edit"><div class="btn btn_item_edit"><i class="icon pe-7s-edit"></i></div><div class="btn btn_item_reorder"><i class="icon pe-7s-menu"></i></div></div></li>');
+		});
+		$('#list').sortable({
+			handle: '.btn_item_reorder',
+			axis: 'y'
+		});
+		if(editMode == true) {
+			$('.item_button').css({'width': '154px'});
+		}
+	} else {
+		$('#list').append('<li ><div class="item_addone"><i class="icon pe-7s-up-arrow"></i>Add an item to begin</div></li>');
 	}
 }
 
@@ -50,12 +54,14 @@ function list_build() {
 var about_pane = false;
 function toggle_about_pane() {
 	if(about_pane == false) {
-		$('#pane_list').css({'border-left': '1px solid #ededee'});
-		$('.pane').animate({'left': '200px'}, animSpeed);
+		$('#pane_list .content').css({'border-left': '1px solid #ededee'});
+		$('#pane_list .content').animate({'left': '200px'}, animSpeed, function(event) {
+			disable_editMode();
+		});
 		about_pane = true;
 	} else {
-		$('.pane').animate({'left': '0'}, animSpeed, function(event) {
-			$('#pane_list').css({'border-left': 'none'});
+		$('.pane .content').animate({'left': '0'}, animSpeed, function(event) {
+			$('#pane_list .content').css({'border-left': 'none'});
 		});
 		about_pane = false;
 	}	
@@ -64,21 +70,26 @@ $(document).on('click', '.btn_about', function(event) {
 	event.preventDefault();
 	toggle_about_pane();
 });
-
+$(document).on('click', '.steveostudios', function(event) {
+	event.preventDefault();
+	link_goto('http://steveostudios.tv');
+});
 /*
  * Edit Mode
  *
  */
 function toggle_edit_mode() {
-	if(editMode == false) {
-		$('.item_button').animate({'width': '154px'}, animSpeed);
-		editMode = true;
-	} else {
-		$('.item_button').animate({'width': '224px'}, animSpeed);
-		editMode = false;
-	}	
+	if(items.length > 0 && about_pane == false) {
+		if(editMode == false) {
+			$('.item_button').animate({'width': '154px'}, animSpeed);
+			editMode = true;
+		} else {
+			$('.item_button').animate({'width': '224px'}, animSpeed);
+			editMode = false;
+		}	
+	}
 }
-function enable_editMode() {
+function disable_editMode() {
 	$('.item_button').css({'width': '224px'});
 	editMode = false;
 }
@@ -108,9 +119,11 @@ $('#list').on( "sortstop", function(event, ui) {
  */
 $(document).on('click', '.btn_item_create', function(event) {
 	event.preventDefault();
-	item_update();
-	$('.btn_item_remove').hide();
-	$('.pane').animate({'left': '-250px'}, animSpeed);
+	if(about_pane == false) {
+		item_update();
+		$('.btn_item_remove').hide();
+		$('.pane').animate({'left': '-250px'}, animSpeed);
+	}
 });
 
 /*
@@ -123,7 +136,7 @@ function item_remove(id) {
 	items_save();
 	item_edit_clearfields();
 
-	enable_editMode();
+	disable_editMode();
 	$('.pane').animate({'left': '0'}, animSpeed);
 }
 
@@ -187,7 +200,7 @@ $(document).on('click', '.btn_item_edit', function(event) {
 
 // Cancel Update
 function item_edit_cancel() {
-	enable_editMode();
+	disable_editMode();
 	$('.pane').animate({'left': '0'}, animSpeed, function(event) {
 		item_edit_clearfields();
 	});
@@ -215,7 +228,7 @@ function item_edit_confirm() {
 	list_build();
 	items_save();
 
-	enable_editMode();
+	disable_editMode();
 	$('.pane').animate({'left': '0'}, animSpeed, function(event) {
 		item_edit_clearfields();
 	});
@@ -305,5 +318,5 @@ ipc.on('saved_linkfile', function(arg_receive) { // comment for dev
  */
 $(function() {
 	items_open();
-	// list_build();
+	// list_build(); // uncomment for dev
 });
