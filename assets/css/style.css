@@ -13,6 +13,12 @@ body {
 .btn {
 	cursor: pointer;
 }
+.everything {
+	width: 1000px;
+	overflow: hidden;
+	display: block;
+	white-space: nowrap;
+}
 .header {
 	width: 100%;
 	height: 32px;
@@ -33,14 +39,16 @@ body {
 .pane {
 	position: relative;
 	width: 250px;
-	display: block;
+	display: inline-block;
 	float: left;
+	background: #fff;
 	z-index: 10;
+	white-space: normal;
 }
 .content {
-	height: 250px;
+	height: 300px;
 	display: block;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 
 /*
@@ -78,7 +86,6 @@ body {
 	margin: 0;
 	padding: 0;
 	height: auto;
-	overflow: hidden;
 	list-style: none;
 	background: #fff;
 }
@@ -89,6 +96,7 @@ body {
 	overflow: hidden;
 	display: block;
 	white-space: nowrap;
+	background: #fff;
 }
 
 #list li .item_button, #list li .item_edit {
@@ -98,7 +106,6 @@ body {
 }
 .item_button {
 	width: 224px;
-	background: #ddd;
 	margin-left: 0;
 	padding-left: 15px;
 	padding-right: 15px;
@@ -195,6 +202,7 @@ ul#icons {
 	-webkit-column-count: 7;
   -webkit-column-gap: 0px;
   list-style: none;
+  white-space: pre-wrap;
 }
 ul#icons li {
 	padding: 5px;

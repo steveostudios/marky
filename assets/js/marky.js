@@ -1,6 +1,6 @@
-// window.$ = window.jQuery = require('./assets/lib/jquery-2.1.3.min.js'); // comment for dev
-// require('./assets/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js'); // comment for dev
-// var ipc = require('ipc'); // comment for dev
+window.$ = window.jQuery = require('./assets/lib/jquery-2.1.3.min.js'); // comment for dev
+require('./assets/lib/jquery-ui-1.11.4.custom/jquery-ui.min.js'); // comment for dev
+var ipc = require('ipc'); // comment for dev
 
 var items = [
 	{"id":0,	"icon":"bandaid",	"name":"Zero",		"order":3,	"url":"10.100.49.100"},
@@ -32,7 +32,7 @@ function list_build() {
 	items.sort(compare);
 	$('#list').html('');
 	$.each(items, function(index, item) {
-  	$('#list').append('<li data-id="'+ item.id +'"><div class="item_button"><i class="icon pe-7s-'+ item.icon +'"></i>'+ item.name +':'+ item.order +'</div><div class="item_edit"><div class="btn btn_item_edit"><i class="icon pe-7s-edit"></i></div><div class="btn btn_item_reorder"><i class="icon pe-7s-menu"></i></div></div></li>');
+  	$('#list').append('<li data-id="'+ item.id +'"><div class="item_button"><i class="icon pe-7s-'+ item.icon +'"></i>'+ item.name +'</div><div class="item_edit"><div class="btn btn_item_edit"><i class="icon pe-7s-edit"></i></div><div class="btn btn_item_reorder"><i class="icon pe-7s-menu"></i></div></div></li>');
 	});
 	$('#list').sortable({
 		handle: '.btn_item_reorder',
@@ -187,7 +187,6 @@ $(document).on('click', '.btn_item_edit', function(event) {
 
 // Cancel Update
 function item_edit_cancel() {
-
 	enable_editMode();
 	$('.pane').animate({'left': '0'}, animSpeed, function(event) {
 		item_edit_clearfields();
@@ -232,7 +231,6 @@ $(document).on('click', '.btn_item_edit_confirm', function(event) {
  */
 function item_edit_select_icon() {
 	var icon = $('#inp_icon').val();
-	console.log(icon);
 	if (icon != '') {
 		$('#pane_icons .content').animate({scrollTop: $('#icon_'+ icon).position().top - $('#pane_icons .content').height()/2 + $('#icon_moon').height()/2}, "slow");
 	} else {
@@ -271,14 +269,41 @@ function item_edit_clearfields() {
 	$('#icons li').removeClass('selected');
 }
 
-function items_save() {
-	console.log('saved: '+ new Date());
+$(document).on('click', '.item_button', function(event) {
+	event.preventDefault();
+	var id = $(this).parent().data('id');
+	var item = getObjByProp(items, 'id', id);
+	console.log(item.url);
+  link_goto(item.url);
+});
+function link_goto(url) {
+	var arg_send = {
+		url: url
+	}
+	ipc.send('goto_link', arg_send);
 }
+
+function items_open() {
+	ipc.send('open_linkfile'); // comment for dev
+	console.log('opened: '+ new Date());
+}
+ipc.on('opened_linkfile', function(arg_receive) { // comment for dev
+  items = arg_receive; // comment for dev
+  list_build(); // comment for dev
+}); // comment for dev
+
+function items_save() {
+	ipc.send('save_linkfile', items); // comment for dev
+}
+ipc.on('saved_linkfile', function(arg_receive) { // comment for dev
+  console.log('saved: '+ new Date()); // comment for dev
+}); // comment for dev
 
 /*
  * Document Ready
  *
  */
 $(function() {
-	list_build();
+	items_open();
+	// list_build();
 });

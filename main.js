@@ -33,8 +33,8 @@ mb.on('ready', function ready () {
 
 // In main process.
 ipc.on('goto_link', function(event, arg_recieve) {
-  shell.openExternal('vnc://'+ arg_recieve.url);
-  console.log('vnc://'+ arg_recieve.url);
+  shell.openExternal(arg_recieve.url);
+  console.log(arg_recieve.url);
   event.sender.send('asynchronous-reply', 'pong');
 });
 
