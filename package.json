@@ -1,38 +1,17 @@
 {
   "name": "marky",
   "version": "1.0.0",
-  "description": "a test",
-  "main": "main.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/maxogden/menubar.git"
-  },
-  "scripts": {
-    "build": "atom-shell-packager . Marky",
-    "build2": "atom-shell-packager . Marky --ignore=node_modules/atom-shell --icon=Icon.icns",
-    "start": "atom-shell ."
-  },
-  "keywords": [
-    "atom",
-    "atom",
-    "shell",
-    "menubar",
-    "menu",
-    "mac",
-    "app"
-  ],
-  "author": "max ogden",
-  "license": "BSD",
-  "bugs": {
-    "url": "https://github.com/maxogden/menubar/issues"
-  },
-  "homepage": "https://github.com/maxogden/menubar",
+  "description": "a menubar bookmark holder",
   "dependencies": {
-    "atom-shell": "0.22.1",
-    "menubar": "^2.0.4"
+    "menubar": "*",
+    "atom-shell": "0.22.1"
   },
   "devDependencies": {
-    "standard": "^3.2.1",
     "atom-shell-packager": "^1.1.0"
+  },
+  "main": "main.js",
+  "scripts": {
+    "build": "atom-shell-packager . Marky --ignore=node_modules/atom-shell --icon=Icon.icns",
+    "start": "atom-shell ."
   }
 }

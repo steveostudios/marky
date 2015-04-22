@@ -17,7 +17,11 @@ function linkfile_create(linkfile, callback) {
   links = new_linkfile;
 }
 
-var mb = menubar()
+var mb = menubar({
+  width: 250,
+  height: 300,
+  dir: __dirname
+});
 
 mb.on('ready', function ready () {
 	fs.readFile(linkfile, function (err, data) {
@@ -27,7 +31,6 @@ mb.on('ready', function ready () {
       links = JSON.parse(data);
     }
   });
-  // event.sender.send('open_linkfile', links); //remove
   console.log('app is ready')
 })
 
